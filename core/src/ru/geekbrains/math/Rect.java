@@ -19,14 +19,14 @@ public class Rect {
         this(from.pos.x, from.pos.y, from.getHalfWidth(), from.getHalfHeight());
     }
 
+    public float getLeft() {
+        return pos.x - halfWidth;
+    }
+
     public Rect(float x, float y, float halfWidth, float halfHeight) {
         pos.set(x, y);
         this.halfWidth = halfWidth;
         this.halfHeight = halfHeight;
-    }
-
-    public float getLeft() {
-        return pos.x - halfWidth;
     }
 
     public float getTop() {

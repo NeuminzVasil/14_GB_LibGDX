@@ -14,15 +14,18 @@ import ru.geekbrains.math.Rect;
 public class BaseScreen implements Screen, InputProcessor {
 
     protected SpriteBatch batch;
-    private Rect screenBounds;
-    private Rect worldBounds;
-    private Rect glBounds;
+    private Rect screenBounds; // Система координат экрана
+    private Rect worldBounds; // Мировая система координат
+    private Rect glBounds; // система координат OpenGL
 
-    private Matrix4 worldToGl;
-    private Matrix3 screenToWorld;
+    private Matrix4 worldToGl; //  матрица преобразования координат
+    private Matrix3 screenToWorld; //  матрица преобразования координат
 
     private Vector2 touch;
 
+    /**
+     * конструктор класса
+     */
     public BaseScreen() {
         this.screenBounds = new Rect();
         this.worldBounds = new Rect();
@@ -32,6 +35,9 @@ public class BaseScreen implements Screen, InputProcessor {
         this.touch = new Vector2();
     }
 
+    /**
+     *
+     */
     @Override
     public void show() {
         System.out.println("show");
@@ -44,6 +50,12 @@ public class BaseScreen implements Screen, InputProcessor {
 
     }
 
+
+    /**
+     * метод обработки события изменения размера экрана
+     * @param width ширина
+     * @param height высота
+     */
     @Override
     public void resize(int width, int height) {
         System.out.println("resize width = " + width + " height = " + height);
@@ -51,7 +63,7 @@ public class BaseScreen implements Screen, InputProcessor {
         screenBounds.setLeft(0);
         screenBounds.setBottom(0);
 
-        float aspect = width / (float) height;
+        float aspect = width / (float) height; // получаем соотногшение сторон экрана для адаптации к любому разрешению экрана.
         worldBounds.setHeight(1f);
         worldBounds.setWidth(1f * aspect);
         MatrixUtils.calcTransitionMatrix(worldToGl, worldBounds, glBounds);
