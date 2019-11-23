@@ -3,30 +3,24 @@ package ru.geekbrains.screen;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.Texture;
-import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.Vector2;
 
 import ru.geekbrains.base.BaseScreen;
-import ru.geekbrains.math.Rect;
-import ru.geekbrains.sprite.Background;
-import ru.geekbrains.sprite.Logo;
 
 public class MenuScreen extends BaseScreen {
 
     private Texture img;
-    private Texture bg;
-    private Logo logo;
-    private Background background;
 
+    private Vector2 pos;
+    private Vector2 v;
 
     @Override
     public void show() {
         super.show();
         img = new Texture("badlogic.jpg");
-        bg = new Texture("textures/bg.png");
-        logo = new Logo(new TextureRegion(img));
-        logo.setHeightProportion(0.5f);
-        background = new Background(new TextureRegion(bg));
+
+        pos = new Vector2();
+        v = new Vector2(2,1);
     }
 
     @Override
@@ -35,26 +29,25 @@ public class MenuScreen extends BaseScreen {
         Gdx.gl.glClearColor(1, 0, 0, 1);
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
         batch.begin();
-        background.draw(batch);
-        logo.draw(batch);
+        batch.draw(img, pos.x, pos.y);
         batch.end();
+        if (Gdx.graphics.getHeight() > pos.y + img.getHeight()
+        && Gdx.graphics.getWidth() > pos.x + img.getWidth()) {
+            pos.add(v);
+        }
     }
 
     @Override
     public void dispose() {
+        batch.dispose();
         img.dispose();
-        bg.dispose();
         super.dispose();
     }
 
     @Override
-    public void resize(Rect worldBounds) {
-        super.resize(worldBounds);
-        background.resize(worldBounds);
-    }
-
-    @Override
-    public boolean touchDown(Vector2 touch, int pointer) {
+    public boolean touchDown(int screenX, int screenY, int pointer, int button) {
+        super.touchDown(screenX, screenY, pointer, button);
+        System.out.println(screenX + "; " + (Gdx.graphics.getHeight() - screenY));
         return false;
     }
 }
