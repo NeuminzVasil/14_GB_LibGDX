@@ -17,7 +17,8 @@ public class MenuScreen extends BaseScreen {
     @Override
     public void show() {
         super.show();
-        img = new Texture("badlogic.jpg");
+        // попробовал новый логотип
+        img = new Texture("NewBLLogo.jpg");
 
         pos = new Vector2();
         v = new Vector2(2,1);
