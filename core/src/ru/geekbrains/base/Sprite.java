@@ -8,11 +8,17 @@ import ru.geekbrains.math.Rect;
 
 public class Sprite extends Rect {
 
-    protected float angle;
-    protected float scale = 1f;
-    protected TextureRegion[] regions;
-    protected int frame;
+    protected float angle; // угол поворота
+    protected float scale = 1f; // увеличение\уменьшение.  1f = 100%
+    protected TextureRegion[] regions; // массив для анимации
+    protected int frame; // текущий кадр из массива регионов
 
+
+    /**
+     * коснтруктор класса
+     *
+     * @param region - тексура (кртинка)
+     */
     public Sprite(TextureRegion region) {
         if (region == null) {
             throw new NullPointerException("region is null");
@@ -23,12 +29,12 @@ public class Sprite extends Rect {
 
     public void draw(SpriteBatch batch) {
         batch.draw(
-                regions[frame],
-                getLeft(), getBottom(),
-                halfWidth, halfHeight,
+                regions[frame], // текстура
+                getLeft(), getBottom(), //  точка начала отрисовки - центр картинки не смотря на слово лефт и Buttom в назывании метода
+                halfWidth, halfHeight, // точка вращения - центр картинки
                 getWidth(), getHeight(),
                 scale, scale,
-                angle
+                angle // угол поворота
         );
     }
 
