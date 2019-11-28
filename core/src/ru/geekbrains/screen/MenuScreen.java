@@ -4,9 +4,10 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
-import com.badlogic.gdx.math.Vector2;
 
 import ru.geekbrains.base.BaseScreen;
+import ru.geekbrains.math.Rect;
+import ru.geekbrains.sprite.Background;
 import ru.geekbrains.sprite.Logo;
 
 /**
@@ -17,8 +18,9 @@ import ru.geekbrains.sprite.Logo;
 public class MenuScreen extends BaseScreen {
 
     private Texture badLogicLogoTexture;
-    private Vector2 currentPosition; // вектор (точка) текущей позиции позиции
-    private Logo logo;
+    private Texture backgroundTexture;
+    private Logo logoSprite;
+    private Background backgroundSprite;
 
     /**
      * метод отрабатывающий при первом отображении окна.
@@ -27,10 +29,12 @@ public class MenuScreen extends BaseScreen {
     @Override
     public void show() {
         super.show();
-        badLogicLogoTexture = new Texture("newBLLogo.jpg");// попробовал новый логотип
-        currentPosition = new Vector2(); // создаем объект вектора (точки) текущей позиции.
-        logo = new Logo(new TextureRegion(badLogicLogoTexture));
-        logo.setHeightProportion(0.5f);
+        badLogicLogoTexture = new Texture("newBLLogo.jpg");// создаем переменную картинки спрайта
+        backgroundTexture = new Texture("textures/backgroundTexture.png"); // создаем переменную картинки спрайта
+        logoSprite = new Logo(new TextureRegion(badLogicLogoTexture));
+        logoSprite.setHeightProportion(0.5f);
+        backgroundSprite = new Background(new TextureRegion(backgroundTexture)); // создаем переменну спрайта фона и загружаем в нее картинку фона.
+
     }
 
 
@@ -47,15 +51,22 @@ public class MenuScreen extends BaseScreen {
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT); // не понял что это ?? - посмотреть в первом уроке. todo
 
         batch.begin(); // начало отрисовки ползущей картинки. Нарисовали ее в новой позиции. Не ясно почему первые позиции заданы 0?
-        logo.draw(batch);
+        backgroundSprite.draw(batch);
+        logoSprite.draw(batch);
         batch.end(); // конец отрисовки ползущей картинки
+    }
+
+    @Override
+    public void resize(Rect worldBounds) {
+        super.resize(worldBounds);
+        backgroundSprite.resize(worldBounds);
     }
 
     @Override
     public boolean keyDown(int keycode) {
         System.out.println("MenuScreen.keyDown(): keycode: " + keycode);
         if (keycode >= 19 && keycode <= 22) {
-            currentPosition.set(0f, 0f);
+           // currentPosition.set(0f, 0f);
         }
         return super.keyDown(keycode);
     }
@@ -64,6 +75,7 @@ public class MenuScreen extends BaseScreen {
     public void dispose() {
         batch.dispose();
         badLogicLogoTexture.dispose();
+        backgroundTexture.dispose();
     }
 
 }
