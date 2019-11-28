@@ -7,7 +7,7 @@ import com.badlogic.gdx.math.Vector2;
  */
 public class Rect {
 
-    public final Vector2 pos = new Vector2(); // позиция по центру
+    public final Vector2 positionVector = new Vector2(); // позиция по центру
     protected float halfWidth; // половина ширины
     protected float halfHeight; // половина высоты
 
@@ -16,29 +16,29 @@ public class Rect {
     }
 
     public Rect(Rect from) {
-        this(from.pos.x, from.pos.y, from.getHalfWidth(), from.getHalfHeight());
+        this(from.positionVector.x, from.positionVector.y, from.getHalfWidth(), from.getHalfHeight());
     }
 
     public float getLeft() {
-        return pos.x - halfWidth;
+        return positionVector.x - halfWidth;
     }
 
     public Rect(float x, float y, float halfWidth, float halfHeight) {
-        pos.set(x, y);
+        positionVector.set(x, y);
         this.halfWidth = halfWidth;
         this.halfHeight = halfHeight;
     }
 
     public float getTop() {
-        return pos.y + halfHeight;
+        return positionVector.y + halfHeight;
     }
 
     public float getRight() {
-        return pos.x + halfWidth;
+        return positionVector.x + halfWidth;
     }
 
     public float getBottom() {
-        return pos.y - halfHeight;
+        return positionVector.y - halfHeight;
     }
 
     public float getHalfWidth() {
@@ -58,25 +58,25 @@ public class Rect {
     }
 
     public void set(Rect from) {
-        pos.set(from.pos);
+        positionVector.set(from.positionVector);
         halfWidth = from.halfWidth;
         halfHeight = from.halfHeight;
     }
 
     public void setLeft(float left) {
-        pos.x = left + halfWidth;
+        positionVector.x = left + halfWidth;
     }
 
     public void setTop(float top) {
-        pos.y = top - halfHeight;
+        positionVector.y = top - halfHeight;
     }
 
     public void setRight(float right) {
-        pos.x = right - halfWidth;
+        positionVector.x = right - halfWidth;
     }
 
     public void setBottom(float bottom) {
-        pos.y = bottom + halfHeight;
+        positionVector.y = bottom + halfHeight;
     }
 
     public void setWidth(float width) {
@@ -102,6 +102,6 @@ public class Rect {
 
     @Override
     public String toString() {
-        return "Rectangle: pos" + pos + " size(" + getWidth() + ", " + getHeight() + ")";
+        return "Rectangle: positionVector" + positionVector + " size(" + getWidth() + ", " + getHeight() + ")";
     }
 }

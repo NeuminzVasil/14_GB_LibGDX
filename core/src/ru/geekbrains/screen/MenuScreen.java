@@ -4,6 +4,7 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
+import com.badlogic.gdx.math.Vector2;
 
 import ru.geekbrains.base.BaseScreen;
 import ru.geekbrains.math.Rect;
@@ -37,7 +38,6 @@ public class MenuScreen extends BaseScreen {
 
     }
 
-
     /**
      * метод отрабатывающий 60 раз в секунду во время работы приложения.
      *
@@ -46,14 +46,8 @@ public class MenuScreen extends BaseScreen {
     @Override
     public void render(float delta) {
         super.render(delta);
-
-        Gdx.gl.glClearColor(1, 1, 0.60f, 1); // цвет фона окна в RGB
-        Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT); // не понял что это ?? - посмотреть в первом уроке. todo
-
-        batch.begin(); // начало отрисовки ползущей картинки. Нарисовали ее в новой позиции. Не ясно почему первые позиции заданы 0?
-        backgroundSprite.draw(batch);
-        logoSprite.draw(batch);
-        batch.end(); // конец отрисовки ползущей картинки
+        update(delta);
+        draw();
     }
 
     @Override
@@ -77,5 +71,26 @@ public class MenuScreen extends BaseScreen {
         badLogicLogoTexture.dispose();
         backgroundTexture.dispose();
     }
+
+    @Override
+    public boolean touchDown(Vector2 touch, int pointer) {
+        logoSprite.touchDown(touch, pointer);
+        return false;
+    }
+
+     private void update (float delta){
+        logoSprite.update(delta);
+     }
+
+     private void draw (){
+         Gdx.gl.glClearColor(1, 1, 0.60f, 1); // цвет фона окна в RGB
+         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT); // не понял что это ?? - посмотреть в первом уроке. todo
+
+         batch.begin(); // начало отрисовки ползущей картинки. Нарисовали ее в новой позиции. Не ясно почему первые позиции заданы 0?
+         backgroundSprite.draw(batch);
+         logoSprite.draw(batch);
+         batch.end(); // конец отрисовки ползущей картинки
+     }
+
 
 }
